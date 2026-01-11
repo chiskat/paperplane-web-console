@@ -1,14 +1,15 @@
 import { HttpException, Injectable } from '@nestjs/common'
 import { Shorts, ShortsType } from '@repo/db'
+import axios from 'axios'
 import dayjs from 'dayjs'
 import { trimStart } from 'lodash'
 import { PrismaService } from 'nestjs-prisma'
 
 import { RedisService } from '../redis/redis.service'
-import { ICreateShortsBody, IShortsResult } from './shorts.controller'
+import { ICreateShortsBody, INextShortAPIBody, IShortsResult } from './shorts.controller'
 import { blogKeyToUrlHex, internalGenerateShortsKey, userGenerateShortsKey } from './shortsKey'
 
-const SHORTS_ROUTE_PREFIX = 's'
+const SHORTS_ROUTE_PREFIX = '_s'
 const SHORTS_REDIS_PREFIX = 'shorts:'
 
 @Injectable()
@@ -65,16 +66,6 @@ export class ShortsService {
     return result
   }
 
-  async generateDailyOffworkShorts(url: string): Promise<string> {
-    const short = await this.generateShorts({
-      type: ShortsType.OFFWORK,
-      url,
-    })
-    const shortUrl = `p01.cc/d/${short.key}`
-
-    return shortUrl
-  }
-
   async queryRecordByKey(key: string): Promise<Shorts | null> {
     key = trimStart(key, '/')
 
@@ -99,6 +90,27 @@ export class ShortsService {
     }
 
     return url
+  }
+
+  async usePaperPlaneNextShortAPI(input: INextShortAPIBody): Promise<IShortsResult> {
+    const apiResult = await axios
+      .post<
+        INextShortAPIBody & { $reuse?: boolean; id: string }
+      >(process.env.PAPERPLANE_NEXT_URL + '/api/short', input, { headers: { [process.env.PAPERPLANE_NEXT_API_KEY_HEADER!]: process.env.PAPERPLANE_NEXT_API_KEY_SECRET } })
+      .then(res => res.data)
+
+    const path = `/s/` + apiResult.key
+    const result: IShortsResult = {
+      id: apiResult.id,
+      key: apiResult.key!,
+      path,
+      p01ShortUrl: `p01.cc${path}`,
+      p01FullUrl: `https://p01.cc${path}`,
+      paperplaneShortUrl: `paperplane.cc${path}`,
+      paperplaneFullUrl: `https://paperplane.cc${path}`,
+    }
+
+    return result
   }
 
   private formatResult(id: string, key: string): IShortsResult {

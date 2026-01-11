@@ -100,7 +100,13 @@ export class DailyOffworkService {
             })
 
             const viewUrl = `${process.env.SERVICE_URL}/daily-offwork/view/${record.id}`
-            const shortUrl = await this.shortsService.generateDailyOffworkShorts(viewUrl)
+            const { p01ShortUrl: shortUrl } = await this.shortsService.usePaperPlaneNextShortAPI({
+              url: viewUrl,
+              tag: `${workdayRecord.date} 的每日报告`,
+              public: false,
+              reuse: false,
+            })
+
             await this.prisma.offworkViewRecord.update({
               where: { id: record.id },
               data: { shortUrl },

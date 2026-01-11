@@ -24,6 +24,16 @@ export interface IShortsResult {
   paperplaneFullUrl: string
 }
 
+export interface INextShortAPIBody {
+  url: string
+  key?: string
+  tag?: string
+  redirectType?: 'PERMANENTLY' | 'TEMPORARY' | 'JAVASCRIPT'
+  expiredAt?: string
+  public?: boolean
+  reuse?: boolean
+}
+
 @Controller('/shorts')
 export class ShortsController {
   constructor(private readonly shortsService: ShortsService) {}
@@ -49,6 +59,11 @@ export class ShortsController {
     }
 
     return this.shortsService.generateShorts(shorts)
+  }
+
+  @Post('/next')
+  async createNextShort(@Body() body: INextShortAPIBody) {
+    return this.shortsService.usePaperPlaneNextShortAPI(body)
   }
 
   @Get('/manager')
