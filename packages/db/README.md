@@ -1,6 +1,6 @@
 # PaperPlane Web Console (monorepo) / 数据库实体 (`@repo/db`)
 
-原 [`paperplane-api`](https://git.paperplane.cc/jia-niang/paperplane-api) 中的 `prisma` 部分，现已被分离出来单独作为一个子包。
+原 [`paperplane-api`](https://git.paperplane.cc/chiskat/paperplane-api) 中的 `prisma` 部分，现已被分离出来单独作为一个子包。
 
 # 运行需求
 

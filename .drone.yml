@@ -18,7 +18,7 @@ trigger:
 
 steps:
   - name: prepare
-    image: paperplanecc/baseline-node20:2025.11.30
+    image: chiskat/baseline-node20:2026.1.14
     commands:
       - npx -y docker-deps
 
@@ -28,7 +28,7 @@ steps:
       - name: docker-sock
         path: /var/run/docker.sock
     commands:
-      - docker build --progress plain --compress -t paperplanecc/paperplane-web-console:${DRONE_COMMIT_SHA:0:8} .
+      - docker build --progress plain --compress -t chiskat/paperplane-web-console:${DRONE_COMMIT_SHA:0:8} .
 
   - name: server-stop-old-container
     image: docker:dind
@@ -47,8 +47,8 @@ steps:
       - name: docker-sock
         path: /var/run/docker.sock
     commands:
-      - docker tag paperplanecc/paperplane-web-console:production paperplanecc/paperplane-web-console:previous-prod
-      - docker rmi paperplanecc/paperplane-web-console:production
+      - docker tag chiskat/paperplane-web-console:production chiskat/paperplane-web-console:previous-prod
+      - docker rmi chiskat/paperplane-web-console:production
 
   - name: server-prisma-sync-db
     image: appleboy/drone-ssh
@@ -64,7 +64,7 @@ steps:
         - |
           docker run -t --rm --name paperplane-web-console-prisma --network root_default -e NODE_ENV=production \
           -v ./.env.production.local:/paperplane-web-console/packages/db/.env.production.local:ro \
-          paperplanecc/paperplane-web-console:${DRONE_COMMIT_SHA:0:8} pnpm db:deploy
+          chiskat/paperplane-web-console:${DRONE_COMMIT_SHA:0:8} pnpm db:deploy
 
   - name: server-deploy
     image: appleboy/drone-ssh
@@ -76,7 +76,7 @@ steps:
         from_secret: DEPLOY_SSH_PRIKEY
       command_timeout: 5m
       script:
-        - docker tag paperplanecc/paperplane-web-console:${DRONE_COMMIT_SHA:0:8} paperplanecc/paperplane-web-console:production
+        - docker tag chiskat/paperplane-web-console:${DRONE_COMMIT_SHA:0:8} chiskat/paperplane-web-console:production
         - cd /root/project-config/paperplane-web-console
         - docker compose up -d
 
@@ -131,8 +131,8 @@ steps:
       - name: docker-sock
         path: /var/run/docker.sock
     commands:
-      - docker rmi paperplanecc/paperplane-web-console:previous-prod
-      - docker rmi paperplanecc/paperplane-web-console:${DRONE_COMMIT_SHA:0:8}
+      - docker rmi chiskat/paperplane-web-console:previous-prod
+      - docker rmi chiskat/paperplane-web-console:${DRONE_COMMIT_SHA:0:8}
 
   - name: clean-website-backup
     image: alpine:3.20
@@ -154,8 +154,8 @@ steps:
     commands:
       - docker stop paperplane-web-console || true
       - docker rm   paperplane-web-console || true
-      - docker rmi  paperplanecc/paperplane-web-console:production || true
-      - docker rmi  paperplanecc/paperplane-web-console:${DRONE_COMMIT_SHA:0:8} || true
+      - docker rmi  chiskat/paperplane-web-console:production || true
+      - docker rmi  chiskat/paperplane-web-console:${DRONE_COMMIT_SHA:0:8} || true
 
   - name: rollback-handle-ssh
     image: appleboy/drone-ssh
@@ -170,8 +170,8 @@ steps:
         from_secret: DEPLOY_SSH_PRIKEY
       command_timeout: 5m
       script:
-        - docker tag paperplanecc/paperplane-web-console:previous-prod paperplanecc/paperplane-web-console:production || true
-        - docker rmi paperplanecc/paperplane-web-console:previous-prod || true
+        - docker tag chiskat/paperplane-web-console:previous-prod chiskat/paperplane-web-console:production || true
+        - docker rmi chiskat/paperplane-web-console:previous-prod || true
         - cd /root/project-config/paperplane-web-console
         - docker compose up -d
 

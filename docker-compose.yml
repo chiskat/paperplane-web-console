@@ -7,7 +7,7 @@
 
 services:
   paperplane-web-console-local:
-    image: paperplanecc/baseline-node20-puppeteer:2025.11.30
+    image: chiskat/baseline-node20-puppeteer:2026.1.14
     container_name: paperplane-web-console-local
     working_dir: /paperplane-web-console
     init: true

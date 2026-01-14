@@ -1,6 +1,6 @@
 # PaperPlane Web Console (monorepo) / 服务端 (`@repo/server`)
 
-原 [`paperplane-api`](https://git.paperplane.cc/jia-niang/paperplane-api) 项目，现合并入 `paperplane-web-console` 此 monorepo 项目，包名 `@repo/server`。
+原 [`paperplane-api`](https://git.paperplane.cc/chiskat/paperplane-api) 项目，现合并入 `paperplane-web-console` 此 monorepo 项目，包名 `@repo/server`。
 
 原先项目内包含的 `prisma` 部分已作为单独一个子包 `@repo/db` 独立出去了，项目中的 `import` 语句使用 `'@repo/db'` 取代原来的 `'@prisma/client'`。
 

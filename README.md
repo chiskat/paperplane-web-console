@@ -1,6 +1,6 @@
 # PaperPlane Web Console (monorepo)
 
-包含原 [`paperplane-api`](https://git.paperplane.cc/jia-niang/paperplane-api) 和 [`paperplane-app`](https://git.paperplane.cc/jia-niang/paperplane-app) 项目。
+包含原 [`paperplane-api`](https://git.paperplane.cc/chiskat/paperplane-api) 和 [`paperplane-app`](https://git.paperplane.cc/chiskat/paperplane-app) 项目。
 
 # 子包
 
@@ -14,7 +14,6 @@
 本项目对系统内已安装的应用有要求：
 
 - 必须已安装 Node.js 20 及以上版本，这是必须的运行条件；
-- 必须已安装 `package.json` 中 `"packageManager"` 字段匹配版本的 pnpm；
 - 如果有用到 `puppeteer` 相关功能（例如每日下班提醒生成图片），则需求已安装 Chrome/Chromium；
 - 如果有用到 `simple-git` 相关功能（例如 Git 周报助手），则需求已安装 Git。
 
@@ -135,7 +134,7 @@ pnpm build
 因为使用到 `puppeteer`、`canvas` 等工具，对运行环境有要求，Node.js 基础镜像无法满足需求，需要使用特定的基础镜像来运行。
 注意，直接使用 `-slim`、`-alpine` 类型的镜像时，可能会因为缺少一些命令导致某些功能运行时报错，例如 `slim` 镜像缺少 `ps` 命令，会导致 `git` 运行出错。
 
-在文件 `Dockerfile` 中可以看到使用 [`paperplanecc/baseline-node20-puppeteer`](https://hub.docker.com/r/paperplanecc/baseline-node20-puppeteer) 作为基础镜像。  
+在文件 `Dockerfile` 中可以看到使用 [`chiskat/baseline-node20-puppeteer`](https://hub.docker.com/r/paperplanecc/baseline-node20-puppeteer) 作为基础镜像。  
 此镜像是专门为本项目准备、已事前构建好的。
 
 因为 Chrome 在非 macOS 的 arm64 平台没有提供二进制包，所以使用 Chromium 浏览器。

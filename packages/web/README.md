@@ -1,6 +1,6 @@
 # PaperPlane Web Console (monorepo) / Web 端 (`@repo/web`)
 
-原 [`paperplane-app`](https://git.paperplane.cc/jia-niang/paperplane-app) 项目，现合并入 `paperplane-web-console` 此 monorepo 项目，包名 `@repo/web`。
+原 [`paperplane-app`](https://git.paperplane.cc/chiskat/paperplane-app) 项目，现合并入 `paperplane-web-console` 此 monorepo 项目，包名 `@repo/web`。
 
 本次迁移更换了开发工具，原先使用 `create-react-app` 以及相关配套工具，现在已换成 `vite`，注意区别。
 

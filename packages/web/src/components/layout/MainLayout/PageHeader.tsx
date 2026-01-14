@@ -26,7 +26,7 @@ export default function PageHeader(): RC {
             <Link
               size="large"
               theme="default"
-              href="https://git.paperplane.cc/jia-niang/paperplane-web-console"
+              href="https://git.paperplane.cc/chiskat/paperplane-web-console"
               target="_blank"
             >
               源码
@@ -34,7 +34,7 @@ export default function PageHeader(): RC {
             <Link
               size="large"
               theme="default"
-              href="https://drone.paperplane.cc/jia-niang/paperplane-web-console"
+              href="https://drone.paperplane.cc/chiskat/paperplane-web-console"
               target="_blank"
             >
               CI/CD
