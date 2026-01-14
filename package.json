@@ -18,6 +18,7 @@
     "check": "pnpm format && pnpm lint && pnpm check-types",
     "commit": "git-cz",
     "commitlint": "commitlint --edit",
+    "ci:prepare-docker": "npx -y docker-deps",
     "prod-start:server": "pnpm -F @repo/server run start:prod",
     "db:gen": "turbo db:gen",
     "db:generate": "turbo db:generate",
