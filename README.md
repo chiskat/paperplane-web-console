@@ -1,3 +1,5 @@
+此仓库已于 2026.5 合并迁移至 [`chiskat/paperplane.cc`](https://github.com/chiskat/paperplane.cc)，后续不再更新。
+
 # PaperPlane Web Console (monorepo)
 
 包含原 [`paperplane-api`](https://git.paperplane.cc/chiskat/paperplane-api) 和 [`paperplane-app`](https://git.paperplane.cc/chiskat/paperplane-app) 项目。
